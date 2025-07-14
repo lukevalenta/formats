@@ -78,6 +78,9 @@ pub enum Tag {
     /// `UTF8String` tag: `12`.
     Utf8String,
 
+    /// `RELATIVE OID` tag: `13`.
+    RelativeOid,
+
     /// `SEQUENCE` tag: `16`.
     Sequence,
 
@@ -203,6 +206,7 @@ impl Tag {
             Tag::Real => 0x09,
             Tag::Enumerated => 0x0A,
             Tag::Utf8String => 0x0C,
+            Tag::RelativeOid => 0x0D,
             Tag::Sequence => 0x10 | CONSTRUCTED_FLAG,
             Tag::Set => 0x11 | CONSTRUCTED_FLAG,
             Tag::NumericString => 0x12,
@@ -274,6 +278,7 @@ impl TryFrom<u8> for Tag {
             0x09 => Ok(Tag::Real),
             0x0A => Ok(Tag::Enumerated),
             0x0C => Ok(Tag::Utf8String),
+            0x0D => Ok(Tag::RelativeOid),
             0x12 => Ok(Tag::NumericString),
             0x13 => Ok(Tag::PrintableString),
             0x14 => Ok(Tag::TeletexString),
@@ -350,6 +355,7 @@ impl fmt::Display for Tag {
             Tag::Real => f.write_str("REAL"),
             Tag::Enumerated => f.write_str("ENUMERATED"),
             Tag::Utf8String => f.write_str("UTF8String"),
+            Tag::RelativeOid => f.write_str("RELATIVE OID"),
             Tag::Set => f.write_str("SET"),
             Tag::NumericString => f.write_str("NumericString"),
             Tag::PrintableString => f.write_str("PrintableString"),
@@ -414,6 +420,7 @@ mod tests {
         assert_eq!(Tag::Real.class(), Class::Universal);
         assert_eq!(Tag::Enumerated.class(), Class::Universal);
         assert_eq!(Tag::Utf8String.class(), Class::Universal);
+        assert_eq!(Tag::RelativeOid.class(), Class::Universal);
         assert_eq!(Tag::Set.class(), Class::Universal);
         assert_eq!(Tag::NumericString.class(), Class::Universal);
         assert_eq!(Tag::PrintableString.class(), Class::Universal);
